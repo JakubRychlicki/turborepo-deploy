@@ -1,0 +1,37 @@
+services:
+  db:
+    container_name: colibra-db
+    image: postgres:17
+    environment:
+      POSTGRES_USER: colibra
+      POSTGRES_PASSWORD: colibra
+      POSTGRES_DB: colibra_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U colibra -d colibra_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # pgadmin:
+  #   container_name: colibra-pgadmin
+  #   image: dpage/pgadmin4:latest
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@colibra.com
+  #     PGADMIN_DEFAULT_PASSWORD: admin123
+  #     PGADMIN_CONFIG_SERVER_MODE: 'False'
+  #   ports:
+  #     - '8080:80'
+  #   volumes:
+  #     - pgadmin_data:/var/lib/pgadmin
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+
+volumes:
+  postgres_data:
+  # pgadmin_data:
