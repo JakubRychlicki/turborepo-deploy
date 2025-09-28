@@ -189,9 +189,6 @@ importers:
       '@prisma/client':
         specifier: ^6.13.0
         version: 6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)
-      prisma-extension-pagination:
-        specifier: ^0.7.5
-        version: 0.7.5(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
@@ -1983,11 +1980,6 @@ packages:
     resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
     hasBin: true
-
-  prisma-extension-pagination@0.7.5:
-    resolution: {integrity: sha512-tMcdOKryuqMrErsf14bmTKPtv25jJ0Cr1799dCr6AXZukrKf7Jz7MEtFD9VUuh+swsq1dYYJQVvmLUlzgAObyA==}
-    peerDependencies:
-      '@prisma/client': ^4.9.0 || ^5.0.0 || ^6.0.0
 
   prisma@6.16.2:
     resolution: {integrity: sha512-aRvldGE5UUJTtVmFiH3WfNFNiqFlAtePUxcI0UEGlnXCX7DqhiMT5TRYwncHFeA/Reca5W6ToXXyCMTeFPdSXA==}
@@ -4344,10 +4336,6 @@ snapshots:
   prelude-ls@1.2.1: {}
 
   prettier@3.6.2: {}
-
-  prisma-extension-pagination@0.7.5(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)):
-    dependencies:
-      '@prisma/client': 6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)
 
   prisma@6.16.2(typescript@5.9.2):
     dependencies:

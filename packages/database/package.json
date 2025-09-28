@@ -19,8 +19,7 @@
     "prebuild": "npm run db:generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.13.0",
-    "prisma-extension-pagination": "^0.7.5"
+    "@prisma/client": "^6.13.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
