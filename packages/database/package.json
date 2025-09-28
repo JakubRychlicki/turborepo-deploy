@@ -3,10 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./dist/src/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node -e \"const fs=require('fs');const path=require('path');if(fs.existsSync('prisma/generated')){fs.cpSync('prisma/generated','dist/prisma/generated',{recursive:true});}\"",
     "db:generate": "prisma generate",
     "db:migrate:dev-init": "prisma migrate dev --name init",
     "db:migrate:dev": "prisma migrate dev",

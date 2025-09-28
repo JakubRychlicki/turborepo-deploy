@@ -25,11 +25,6 @@ export default function Home() {
   const { data: healthCheck } = useQuery(trpc.healthCheck.queryOptions())
   console.log(healthCheck)
 
-  const { data: audioSession } = useQuery(
-    trpc.audioSession.getAll.queryOptions({ page: 1, limit: 10, search: '' })
-  )
-  console.log(audioSession)
-
   return (
     <div className={styles.page}>
       <main className={styles.main}>

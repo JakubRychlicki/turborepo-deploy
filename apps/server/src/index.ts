@@ -7,6 +7,8 @@ import { trpcServer } from '@hono/trpc-server'
 import { appRouter, createTRPCContext } from '@repo/api'
 import { generateRootHtml } from './utils.js';
 import { serve } from '@hono/node-server'
+import { uploadRoutes } from './routers/upload.js'
+import { serveStatic } from '@hono/node-server/serve-static'
 
 const {
   PUBLIC_SERVER_URL = 'http://localhost:3000',
@@ -68,6 +70,12 @@ app.use(
     createContext: (_opts, context) => createTRPCContext({ context, auth })
   })
 )
+
+// Static files
+app.use('/uploads/*', serveStatic({ root: './' }))
+
+// Multipart upload routes (np. POST /api/upload)
+app.route('/', uploadRoutes)
 
 // Start
 const port = parseInt(process.env.PORT || '3000')

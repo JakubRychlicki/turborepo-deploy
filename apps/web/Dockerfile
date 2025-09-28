@@ -34,7 +34,7 @@ COPY --from=builder /app/out/full/ .
 ARG NEXT_PUBLIC_SERVER_URL
 ENV NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL
 
-RUN turbo run generate
+RUN turbo run db:generate
 RUN turbo run build
  
 FROM base AS runner

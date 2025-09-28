@@ -1,6 +1,5 @@
 import { Prisma } from '../../prisma/generated/prisma/index.js'
 
-// Definicja ścieżki do uploadów
 const UPLOADS_BASE_URL = '/uploads'
 
 export const mediaUrlExtension = Prisma.defineExtension({

@@ -31,3 +31,5 @@ lerna-debug.log*
 dist/
 .cache/
 .turbo/
+
+uploads/

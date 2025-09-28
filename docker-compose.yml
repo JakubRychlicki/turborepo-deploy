@@ -31,7 +31,10 @@ services:
     ports:
       - ${SERVER_PORT}:3000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    volumes:
+      - uploads_data:/app/uploads
 
   db:
     container_name: colibra-db
@@ -53,3 +56,4 @@ services:
 
 volumes:
   postgres_data:
+  uploads_data:
