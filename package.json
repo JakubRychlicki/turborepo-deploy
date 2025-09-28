@@ -7,7 +7,7 @@
     "tools/*"
   ],
   "prisma": {
-    "schema": "packages/database/prisma/schema.prisma"
+    "schema": "packages/database/prisma/schema/schema.prisma"
   },
   "scripts": {
     "build": "turbo run build",
@@ -18,7 +18,7 @@
     "db:migrate:dev": "turbo run db:migrate:dev",
     "db:push": "turbo run db:push",
     "db:studio": "turbo run db:studio",
-    "generate": "turbo run generate",
+    "db:generate": "turbo run db:generate",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint"
   },

@@ -1,0 +1,5 @@
+model ProgramCategory {
+  id       Int      @id @default(autoincrement())
+  name     String
+  programs Program[]
+}

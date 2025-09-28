@@ -1,0 +1,10 @@
+generator client {
+  provider = "prisma-client-js"
+  moduleFormat = "esm"
+  output = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}

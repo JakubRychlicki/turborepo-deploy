@@ -1,14 +1,19 @@
-import { PrismaClient } from "../generated/client/index.js";
+import { PrismaClient } from "../prisma/generated/prisma/index.js";
+import { mediaUrlExtension } from "./lib/prisma-extensions.js";
+import { pagination } from "./lib/pagination/index.js";
 
-declare global {
-  // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined;
-}
+const globalForPrisma = global as unknown as { 
+  prisma: ReturnType<typeof createExtendedPrisma> | undefined 
+};
 
-export const prisma = global.prisma ?? new PrismaClient();
+const createExtendedPrisma = () => {
+  return new PrismaClient().$extends(mediaUrlExtension).$extends(pagination({
+    pages: {
+      includePageCount: true,
+    },
+  }));
+};
 
-if (process.env.NODE_ENV !== "production") {
-  global.prisma = prisma;
-}
+export const prisma = globalForPrisma.prisma || createExtendedPrisma();
 
-export * from "../generated/client/index.js";
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

@@ -1,0 +1,7 @@
+model Narrator {
+  id       Int     @id @default(autoincrement())
+  name     String
+  isActive Boolean @default(true)
+
+  users    User[]
+}

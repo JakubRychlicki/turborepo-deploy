@@ -1,0 +1,23 @@
+model Program {
+  id               Int                  @id @default(autoincrement())
+  title            String
+  level            Int                  @default(1)
+  description      String
+  targetAudience   String
+  expectedEffects  String
+  isPaid           Boolean              @default(false)
+  price            Int?
+
+  keywords         ProgramKeyword[]     @relation("ProgramKeywords")
+  audioSessions    AudioSession[]       @relation("ProgramAudioSessions")
+  worksheets       ProgramWorksheet[]   @relation("ProgramWorksheets")
+
+  thumbnail            Media?               @relation(fields: [thumbnailId], references: [id], name: "ProgramThumbnail")
+  thumbnailId          Int?                 @unique
+
+  categoryId       Int
+  category         ProgramCategory      @relation(fields: [categoryId], references: [id])
+
+  users            User[]
+  payments         Payment[]
+}

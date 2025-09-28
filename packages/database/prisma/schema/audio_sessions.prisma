@@ -1,0 +1,11 @@
+model AudioSession {
+  id       Int    @id @default(autoincrement())
+  title     String
+  description String?
+  durationSeconds Int?
+
+  mediaId  Int
+  media    Media  @relation(fields: [mediaId], references: [id], name: "AudioSessionMedia")
+
+  programs Program[] @relation("ProgramAudioSessions")
+}

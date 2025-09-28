@@ -1,30 +1,34 @@
-"use client";
+'use client'
 
-import Image, { type ImageProps } from "next/image";
-import styles from "./page.module.css";
-import { trpc } from "../utils/trpc";
-import { useQuery } from "@tanstack/react-query";
+import Image, { type ImageProps } from 'next/image'
+import styles from './page.module.css'
+import { trpc } from '../utils/trpc'
+import { useQuery } from '@tanstack/react-query'
 
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
+type Props = Omit<ImageProps, 'src'> & {
+  srcLight: string
+  srcDark: string
+}
 
 const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
+  const { srcLight, srcDark, ...rest } = props
 
   return (
     <>
       <Image {...rest} src={srcLight} className="imgLight" />
       <Image {...rest} src={srcDark} className="imgDark" />
     </>
-  );
-};
+  )
+}
 
 export default function Home() {
-
-  const { data: healthCheck } = useQuery(trpc.auth.healthCheck.queryOptions())
+  const { data: healthCheck } = useQuery(trpc.healthCheck.queryOptions())
   console.log(healthCheck)
+
+  const { data: audioSession } = useQuery(
+    trpc.audioSession.getAll.queryOptions({ page: 1, limit: 10, search: '' })
+  )
+  console.log(audioSession)
 
   return (
     <div className={styles.page}>
@@ -102,5 +106,5 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  );
+  )
 }

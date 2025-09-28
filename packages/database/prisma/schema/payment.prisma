@@ -1,0 +1,14 @@
+model Payment {
+  id        Int      @id @default(autoincrement())
+  intentId  String   @unique
+  amount    Int
+  currency  String
+  status    String
+  userId    String
+
+  programId  Int?
+  program    Program? @relation(fields: [programId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

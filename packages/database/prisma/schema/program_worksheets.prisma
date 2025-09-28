@@ -1,0 +1,7 @@
+model ProgramWorksheet {
+  id       Int    @id @default(autoincrement())
+  fileId   Int
+  file     Media  @relation(fields: [fileId], references: [id], name: "WorksheetMedia")
+
+  programs Program[] @relation("ProgramWorksheets")
+}
