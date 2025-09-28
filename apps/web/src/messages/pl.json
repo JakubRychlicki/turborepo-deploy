@@ -1,0 +1,165 @@
+{
+  "common": {
+    "actions": {
+      "logout": "Wyloguj",
+      "preview": "Podgląd",
+      "search": "Szukaj",
+      "save": "Zapisz",
+      "cancel": "Anuluj"
+    },
+    "messages": {
+      "noResults": "Brak wyników"
+    },
+    "optional": "opcjonalne",
+    "level": "Poziom",
+    "loading": "Ładowanie...",
+    "selected": "Wybrano"
+  },
+  "meta": {
+    "appName": "Colibra"
+  },
+  "navigation": {
+    "dashboard": "Pulpit",
+    "programs": "Programy",
+    "tracks": "Utwory"
+  },
+  "footer": {
+    "madeBy": "Made by",
+    "dogtronic": "Dogtronic"
+  },
+  "pages": {
+    "login": {
+      "title": "Logowanie",
+      "description": "Wprowadź swoje dane aby uzyskać dostęp do panelu",
+      "email": "E-mail",
+      "password": "Hasło",
+      "submit": "Zaloguj",
+      "toast": {
+        "success": "Zalogowano pomyślnie",
+        "error": "Nieprawidłowy adres email lub hasło",
+        "error_default": "Wystąpił błąd podczas logowania",
+        "error_admin": "Dostęp tylko dla administratorów."
+      }
+    },
+    "confirmation": {
+      "title": "Konto zweryfikowane!",
+      "gratulations": "Gratulacje!",
+      "description": "Możesz teraz w pełni korzystać ze wszystkich funkcji aplikacji"
+    },
+    "dashboard": {
+      "title": "Pulpit Administratora"
+    },
+    "programs": {
+      "title": "Zarządzanie programami",
+      "addProgram": "Dodaj program"
+    },
+    "tracks": {
+      "title": "Zarządzanie utworami",
+      "addTrack": "Dodaj utwór"
+    }
+  },
+  "entities": {
+    "user": {
+      "fullname": "Imię i nazwisko",
+      "email": "E-mail",
+      "createdAt": "Data utworzenia"
+    },
+    "program": {
+      "basicInformation": "Podstawowe informacje",
+      "basicInformationDescription": "Wprowadź podstawowe dane programu",
+      "title": "Tytuł",
+      "titlePlaceholder": "Wprowadź tytuł programu",
+      "level": "Poziom ({min}-{max})",
+      "category": "Kategoria",
+      "description": "Opis",
+      "descriptionPlaceholder": "Wprowadź opis programu",
+      "targetAudience": "Dla kogo?",
+      "targetAudiencePlaceholder": "Opisz grupę docelową",
+      "expectedEffects": "Oczekiwane efekty",
+      "expectedEffectsPlaceholder": "Jakich efektów można się spodziewać?",
+      "audioSessions": "Utwory",
+      "audioSessionsDescription": "Proszę wybrać utwory z poniższej listy.",
+      "selectedAudioSessions": "Wybrane utwory",
+      "selectAudioSessions": "Wybierz utwory",
+      "hideAudioSessions": "Ukryj utwory",
+      "availableAudioSessions": "Dostępne utwory",
+      "selectAudioSessionsDescription": "Kliknij na utwór aby go wybrać lub odznaczyć",
+      "noAudioSessionsAvailable": "Brak dostępnych utworów",
+      "searchAudioSessions": "Szukaj utworów...",
+      "keywords": "Słowa kluczowe",
+      "keywordsDescription": "Proszę wybrać słowa kluczowe z poniższej listy.",
+      "thumbnail": {
+        "thumbnail": "Miniatura",
+        "fileFormatError": "Proszę wybrać plik obrazu ({extensions})",
+        "fileTooLarge": "Plik jest za duży. Maksymalny rozmiar to {maxSize}MB",
+        "clickToSelect": "Kliknij aby wybrać",
+        "dragAndDrop": "lub przeciągnij i upuść",
+        "supportedFormats": "Obsługiwane formaty: {formats}",
+        "maxFileSize": "Maksymalny rozmiar: {maxSize}MB",
+        "previewAlt": "Podgląd obrazu"
+      },
+      "toast": {
+        "success": "Program został dodany pomyślnie",
+        "error": "Wystąpił błąd podczas dodawania programu",
+        "errorUpload": "Wystąpił błąd podczas przesyłania pliku miniatury",
+        "thumbnailRequired": "Plik miniatury jest wymagany"
+      }
+    },
+    "category": {
+      "select": {
+        "title": "Kategoria",
+        "default": "Wybierz kategorię"
+      },
+      "add": {
+        "title": "Dodaj nową kategorię",
+        "description": "Wprowadź nazwę nowej kategorii",
+        "name": "Kategoria",
+        "namePlaceholder": "Wprowadź nazwę kategorii",
+        "button": "Dodaj",
+        "success": "Kategoria została dodana pomyślnie",
+        "error": "Wystąpił błąd podczas dodawania kategorii"
+      }
+    },
+    "track": {
+      "title": "Tytuł",
+      "titlePlaceholder": "Wprowadź tytuł utworu",
+      "artist": "Artysta",
+      "artistPlaceholder": "Wprowadź artystę",
+      "description": "Opis",
+      "descriptionPlaceholder": "Wprowadź opis utworu",
+      "durationSeconds": "Czas trwania (sekundy)",
+      "trackAudio": {
+        "audioFile": "Plik audio",
+        "fileFormatError": "Proszę wybrać plik audio ({extensions})",
+        "fileTooLarge": "Plik jest za duży. Maksymalny rozmiar to {maxSize}MB",
+        "clickToSelect": "Kliknij aby wybrać",
+        "dragAndDrop": "lub przeciągnij i upuść",
+        "supportedFormats": "Obsługiwane formaty: {formats}",
+        "maxFileSize": "Maksymalny rozmiar: {maxSize}MB",
+        "clickToChange": "Kliknij aby zmienić"
+      },
+      "toast": {
+        "success": "Utwór został dodany pomyślnie",
+        "error": "Wystąpił błąd podczas dodawania utworu",
+        "errorUpload": "Wystąpił błąd podczas przesyłania pliku audio",
+        "audioRequired": "Plik audio jest wymagany"
+      }
+    }
+  },
+  "pagination": {
+    "firstPage": "Przejdź do pierwszej strony",
+    "lastPage": "Przejdź do ostatniej strony",
+    "previousPage": "Poprzednia",
+    "nextPage": "Następna",
+    "info": "Wyświetlanie od {start} do {end} z {total} wyników",
+    "infoSelected": "Zaznaczono {selected} z {total} wyników",
+    "page": "Strona {page} z {totalPages}",
+    "loadMore": "Załaduj więcej",
+    "loading": "Ładowanie..."
+  },
+  "validation": {
+    "required": "Pole jest wymagane.",
+    "maxLength": "To pole nie może przekroczyć {max} znaków.",
+    "minLength": "To pole musi mieć co najmniej {min} znaków."
+  }
+}
