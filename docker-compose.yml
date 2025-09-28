@@ -3,10 +3,12 @@ services:
     build:
       context: .
       dockerfile: ./apps/web/Dockerfile
+      args:
+        - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
     environment:
       - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
     ports:
-      - ${WEB_PORT}:3001
+      - ${WEB_PORT:-3001}:3001
     depends_on:
       - server
 
@@ -29,7 +31,7 @@ services:
       - FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}
       - FACEBOOK_CLIENT_SECRET=${FACEBOOK_CLIENT_SECRET}
     ports:
-      - ${SERVER_PORT}:3000
+      - ${SERVER_PORT:-3000}:3000
     depends_on:
       db:
         condition: service_healthy
