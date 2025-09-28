@@ -7,6 +7,48 @@ const SortOrder = z.enum(['asc', 'desc'])
 const UserRole = z.enum(['admin', 'user'])
 
 export const userRouter = createTRPCRouter({
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).max(100).default(10),
+        sort: z
+          .string()
+          .regex(/^(firstname|email|createdAt):(asc|desc)$/)
+          .optional(),
+        role: UserRole.optional()
+      })
+    )
+    .query(async ({ input }) => {
+      const { page, limit, sort, role } = input
+
+      const [sortBy, sortOrder] = input.sort
+        ? (input.sort.split(':') as [
+            z.infer<typeof SortKey>,
+            z.infer<typeof SortOrder>
+          ])
+        : (['createdAt', 'desc'] as const)
+
+      const orderBy = { [sortBy]: sortOrder } as const
+
+      const where = role ? { role } : {}
+
+      const [users, meta] = await prisma.user
+        .paginate({
+          where,
+          orderBy
+        })
+        .withPages({
+          limit,
+          page
+        })
+
+      return {
+        users,
+        meta
+      }
+    }),
+
   getById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {

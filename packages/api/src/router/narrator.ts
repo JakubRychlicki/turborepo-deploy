@@ -3,6 +3,35 @@ import { prisma } from '@repo/database'
 import { protectedProcedure, createTRPCRouter } from '../trpc.js'
 
 export const narratorRouter = createTRPCRouter({
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).max(100).default(10),
+        includeInactive: z.boolean().default(false)
+      })
+    )
+    .query(async ({ input }) => {
+      const { page, limit, includeInactive } = input
+
+      const where = includeInactive ? {} : { isActive: true }
+
+      const [narrators, meta] = await prisma.narrator
+        .paginate({
+          where,
+          orderBy: { name: 'asc' }
+        })
+        .withPages({
+          limit,
+          page
+        })
+
+      return {
+        narrators,
+        meta
+      }
+    }),
+
   getById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {

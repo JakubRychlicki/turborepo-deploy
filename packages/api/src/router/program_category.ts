@@ -3,6 +3,35 @@ import { prisma } from '@repo/database'
 import { protectedProcedure, createTRPCRouter } from '../trpc.js'
 
 export const programCategoryRouter = createTRPCRouter({
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).max(100).default(10),
+        search: z.string().optional()
+      })
+    )
+    .query(async ({ input }) => {
+      const { page, limit, search } = input
+
+      const whereCondition = search ? { name: { contains: search } } : {}
+
+      const [categories, meta] = await prisma.programCategory
+        .paginate({
+          where: whereCondition,
+          orderBy: { name: 'asc' }
+        })
+        .withPages({
+          limit,
+          page
+        })
+
+      return {
+        categories,
+        meta
+      }
+    }),
+
   getById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {

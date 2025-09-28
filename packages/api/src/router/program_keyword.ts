@@ -3,6 +3,31 @@ import { prisma } from '@repo/database'
 import { protectedProcedure, createTRPCRouter } from '../trpc.js'
 
 export const programKeywordRouter = createTRPCRouter({
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).max(100).default(10)
+      })
+    )
+    .query(async ({ input }) => {
+      const { page, limit } = input
+
+      const [keywords, meta] = await prisma.programKeyword
+        .paginate({
+          orderBy: { name: 'asc' }
+        })
+        .withPages({
+          limit,
+          page
+        })
+
+      return {
+        keywords,
+        meta
+      }
+    }),
+
   create: protectedProcedure
     .input(
       z.object({

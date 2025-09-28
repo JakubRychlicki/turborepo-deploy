@@ -4,6 +4,51 @@ import { protectedProcedure, createTRPCRouter } from '../trpc.js'
 import { TRPCError } from '@trpc/server'
 
 export const programRouter = createTRPCRouter({
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).max(100).default(10),
+        categoryId: z.number().optional()
+      })
+    )
+    .query(async ({ input }) => {
+      const { page, limit, categoryId } = input
+
+      const where: any = {}
+      if (categoryId) where.categoryId = categoryId
+
+      const [programs, meta] = await prisma.program
+        .paginate({
+          where,
+          orderBy: { id: 'desc' },
+          include: {
+            thumbnail: true,
+            category: true,
+            keywords: true,
+            audioSessions: {
+              include: {
+                media: true
+              }
+            },
+            worksheets: {
+              include: {
+                file: true
+              }
+            }
+          }
+        })
+        .withPages({
+          limit,
+          page
+        })
+
+      return {
+        programs,
+        meta
+      }
+    }),
+
   getById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
@@ -27,7 +72,10 @@ export const programRouter = createTRPCRouter({
       })
 
       if (!program) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Program nie został znaleziony' })
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Program nie został znaleziony'
+        })
       }
 
       return program
@@ -60,7 +108,8 @@ export const programRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      const { keywordIds, audioSessionIds, worksheetIds, ...programData } = input
+      const { keywordIds, audioSessionIds, worksheetIds, ...programData } =
+        input
 
       // Sprawdź czy kategoria istnieje
       const category = await prisma.programCategory.findUnique({
@@ -84,7 +133,9 @@ export const programRouter = createTRPCRouter({
           where: { id: { in: keywordIds } }
         })
         if (keywords.length !== keywordIds.length) {
-          throw new Error('Jeden lub więcej słów kluczowych nie zostało znalezionych')
+          throw new Error(
+            'Jeden lub więcej słów kluczowych nie zostało znalezionych'
+          )
         }
       }
 
@@ -94,7 +145,9 @@ export const programRouter = createTRPCRouter({
           where: { id: { in: audioSessionIds } }
         })
         if (audioSessions.length !== audioSessionIds.length) {
-          throw new Error('Jedna lub więcej sesji audio nie zostało znalezionych')
+          throw new Error(
+            'Jedna lub więcej sesji audio nie zostało znalezionych'
+          )
         }
       }
 
@@ -104,7 +157,9 @@ export const programRouter = createTRPCRouter({
           where: { id: { in: worksheetIds } }
         })
         if (worksheets.length !== worksheetIds.length) {
-          throw new Error('Jeden lub więcej arkuszy programu nie zostało znalezionych')
+          throw new Error(
+            'Jeden lub więcej arkuszy programu nie zostało znalezionych'
+          )
         }
       }
 
@@ -112,13 +167,13 @@ export const programRouter = createTRPCRouter({
         data: {
           ...programData,
           keywords: {
-            connect: keywordIds.map(id => ({ id }))
+            connect: keywordIds.map((id) => ({ id }))
           },
           audioSessions: {
-            connect: audioSessionIds.map(id => ({ id }))
+            connect: audioSessionIds.map((id) => ({ id }))
           },
           worksheets: {
-            connect: worksheetIds.map(id => ({ id }))
+            connect: worksheetIds.map((id) => ({ id }))
           }
         },
         include: {
@@ -171,7 +226,8 @@ export const programRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      const { id, keywordIds, audioSessionIds, worksheetIds, ...updateData } = input
+      const { id, keywordIds, audioSessionIds, worksheetIds, ...updateData } =
+        input
 
       const existingProgram = await prisma.program.findUnique({
         where: { id }
@@ -207,7 +263,9 @@ export const programRouter = createTRPCRouter({
           where: { id: { in: keywordIds } }
         })
         if (keywords.length !== keywordIds.length) {
-          throw new Error('Jeden lub więcej słów kluczowych nie zostało znalezionych')
+          throw new Error(
+            'Jeden lub więcej słów kluczowych nie zostało znalezionych'
+          )
         }
       }
 
@@ -217,7 +275,9 @@ export const programRouter = createTRPCRouter({
           where: { id: { in: audioSessionIds } }
         })
         if (audioSessions.length !== audioSessionIds.length) {
-          throw new Error('Jedna lub więcej sesji audio nie została znalezionych')
+          throw new Error(
+            'Jedna lub więcej sesji audio nie została znalezionych'
+          )
         }
       }
 
@@ -227,7 +287,9 @@ export const programRouter = createTRPCRouter({
           where: { id: { in: worksheetIds } }
         })
         if (worksheets.length !== worksheetIds.length) {
-          throw new Error('Jeden lub więcej arkuszy programu nie zostało znalezionych')
+          throw new Error(
+            'Jeden lub więcej arkuszy programu nie zostało znalezionych'
+          )
         }
       }
 
@@ -237,17 +299,17 @@ export const programRouter = createTRPCRouter({
           ...updateData,
           ...(keywordIds !== undefined && {
             keywords: {
-              set: keywordIds.map(id => ({ id }))
+              set: keywordIds.map((id) => ({ id }))
             }
           }),
           ...(audioSessionIds !== undefined && {
             audioSessions: {
-              set: audioSessionIds.map(id => ({ id }))
+              set: audioSessionIds.map((id) => ({ id }))
             }
           }),
           ...(worksheetIds !== undefined && {
             worksheets: {
-              set: worksheetIds.map(id => ({ id }))
+              set: worksheetIds.map((id) => ({ id }))
             }
           })
         },

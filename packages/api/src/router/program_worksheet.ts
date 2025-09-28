@@ -3,6 +3,34 @@ import { prisma } from '@repo/database'
 import { protectedProcedure, createTRPCRouter } from '../trpc.js'
 
 export const programWorksheetRouter = createTRPCRouter({
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).max(100).default(10)
+      })
+    )
+    .query(async ({ input }) => {
+      const { page, limit } = input
+
+      const [worksheets, meta] = await prisma.programWorksheet
+        .paginate({
+          orderBy: { id: 'desc' },
+          include: {
+            file: true
+          }
+        })
+        .withPages({
+          limit,
+          page
+        })
+
+      return {
+        worksheets,
+        meta
+      }
+    }),
+
   getById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
