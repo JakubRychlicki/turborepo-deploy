@@ -74,6 +74,22 @@ Run the Next.js application:
 pnpm exec turbo dev --filter=web
 ```
 
+## Testing Emails
+
+To test email functionality, you can use the built-in test email feature:
+
+```bash
+cd packages/email
+pnpm test:email
+```
+
+This command will:
+- Send a test verification email using Ethereal (test SMTP service)
+- Display a preview URL where you can view the sent email
+- No need to build the project - it runs directly with tsx
+
+The test email uses sample data and sends to a test recipient for verification purposes.
+
 ## Project Structure
 
 The project consists of:
@@ -82,3 +98,4 @@ The project consists of:
 - **packages/api** - Shared API logic
 - **packages/auth** - Shared authentication logic
 - **packages/database** - Database configuration and Prisma
+- **packages/email** - Email service with Nodemailer integration
