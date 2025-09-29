@@ -4,6 +4,7 @@ import { betterAuth, type BetterAuthOptions } from "better-auth"
 import { admin } from "better-auth/plugins"
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import urlJoin from "url-join"
+import { sendEmail, generateVerificationEmail, generateForgotPasswordEmail } from "@repo/email"
 
 export type BetterAuthReturn = ReturnType<typeof betterAuth>
 
@@ -41,6 +42,35 @@ export function initAuth(options: {
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: false,
+      sendResetPassword: async ({ user, url, token }: { 
+        user: User, 
+        url: string, 
+        token: string 
+      }, request: Request | undefined) => {
+        const htmlContent = await generateForgotPasswordEmail({ token, user })
+  
+        await sendEmail({
+          to: user.email,
+          subject: 'Reset your password',
+          html: htmlContent
+        })
+      }
+    },
+    emailVerification: { 
+      sendOnSignUp: false,
+      sendVerificationEmail: async ({ user, url, token }: { 
+        user: User, 
+        url: string, 
+        token: string 
+      }, request: Request | undefined) => {
+        const htmlContent = await generateVerificationEmail({ token, user })
+  
+        await sendEmail({
+          to: user.email,
+          subject: 'Confirm your email',
+          html: htmlContent
+        })
+      }
     },
     socialProviders: {
       google: {
@@ -57,7 +87,6 @@ export function initAuth(options: {
         clientSecret: options.facebookClientSecret || "",
       },
     },
-    emailVerification: { sendOnSignUp: false },
     plugins: [expo(), admin()],
   }
 
@@ -65,4 +94,5 @@ export function initAuth(options: {
 }
 
 export type Auth = BetterAuthReturn
+type User =  Auth['$Infer']['Session']['user']
 export type Session = Auth['$Infer']['Session']
